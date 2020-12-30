@@ -2,29 +2,18 @@ import React, {useEffect, useState} from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
-// import {Link} from 'react-router-dom';
+  import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function Country(){
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState([])
-    const [states, setStates] = useState([])
     const [state_cases, setCases] = useState([{}])
 
-    useEffect (() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const response = await fetch("http://localhost:5000/");
-            console.log(response);
-            const result = await response.json();
-            console.log(result);
-            setLoading(false);
-            setData(result.raw_data);
-            var states = [...new Set(result.raw_data.map ((row) =>  { return (row.detectedstate); } ) )];
-            setStates(states);
-        }
-        fetchData();
-    },[])
+    //get state from store
+    const state = useSelector ( (state) => state);
+
+    //extract data and states from store state
+    const { data, states } = state;
 
     useEffect (() => {
         getStateCounts();
@@ -34,7 +23,7 @@ export default function Country(){
         var state_counts = [];
         for (let i = 0; i < states.length ;i++){
             let counts = 0;
-            let state_code = ''
+            let state_code = '';
             let row = {};
             data.forEach ( (row) => {
                 if(row.detectedstate === states[i]){
@@ -83,7 +72,7 @@ export default function Country(){
         height={750}
         data = {state_cases}
         margin={{
-          top: 50, right: 0, left: 30, bottom: 5,
+          top: 50, right: 0, left: 30, bottom: 10,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />

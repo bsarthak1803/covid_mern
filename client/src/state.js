@@ -4,45 +4,37 @@ import {
   } from 'recharts';
 import {Link} from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function State(props){
-    const [loading, setLoading] = useState(false);
     const [district_cases, setCases] = useState([{}])
-    const [data, setData] = useState([]);
-    const [districts, setDistricts] = useState([]);
 
-    useEffect( () => {
-      fetchData();
-    },[])
+    //get state from store
+    const state = useSelector ( (state) => state);
 
-    const fetchData = async () => {
-      setLoading(true);
-      const response = await fetch("http://localhost:5000/");
-      const result = await response.json();
-      setData(result.raw_data);
-      var districts = [...new Set(result.raw_data.map ((row) =>  {return ( row.detectedstate === props.match.params.state_name ? row.detecteddistrict : null);} ) )];
-      setDistricts(districts);
-      setLoading(false);
-  }
-
+    //extract data and states from store state
+    const { data, states } = state;
 
     useEffect ( () => {
+    //get cases for each district
     getDistrictCounts();
-    },[data, districts])
+    },[data])
 
+    //get cases for each district
     const getDistrictCounts = () => {
+      var districts_array = [...new Set(data.map ((row) =>  {return ( row.detectedstate === props.match.params.state_name ? row.detecteddistrict : null);} ) )];
       var district_counts = [];
-      for (let i = 1; i < districts.length ;i++){
+      for (let i = 1; i < districts_array.length ;i++){
           let counts = 0;
           let row = {};
           data.forEach ( (row) => {
-              if(row.detecteddistrict === districts[i]){
+              if(row.detecteddistrict === districts_array[i]){
                 counts+=parseInt(row.numcases);
               }
           })
           row = {
-              district_name : districts[i],
+              district_name : districts_array[i],
               active_cases : counts
           }
           district_counts.push(row);
