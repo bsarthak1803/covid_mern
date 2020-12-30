@@ -18,10 +18,6 @@ export default function State(props){
 
     useEffect ( () => {
     //get cases for each district
-    getDistrictCounts();
-    },[data])
-
-    //get cases for each district
     const getDistrictCounts = () => {
       var districts_array = [...new Set(data.map ((row) =>  {return ( row.detectedstate === props.match.params.state_name ? row.detecteddistrict : null);} ) )];
       var district_counts = [];
@@ -41,6 +37,9 @@ export default function State(props){
       }
       setCases(district_counts);
   }
+    getDistrictCounts();
+    },[data, props.match.params.state_name])
+
 
   // function CustomTooltip({label}) {
   //   var district_name ='';
@@ -64,16 +63,24 @@ export default function State(props){
     return (
     <div className="state">
       <Row>
-        <Col sm="5" style={{marginLeft : "20%", marginTop : "50px"}}>
-        <h4>State - {props.match.params.state_name}</h4>
-        <h4>Total Active Cases - {props.match.params.total_cases}</h4>
-        </Col>
-        <Col sm="2"></Col>
-        <Col sm="5" style={{marginLeft : "-5%", marginTop:"50px"}}>
-        <Link to='/country'>
-        <button type="button" className="btn btn-primary">Country Chart</button>
-        </Link>
-        </Col>
+        <div className="card rounded" style={{marginLeft:"35%", marginTop:"3%", width:"510px", height:"100px",boxShadow:"black"}}>
+        <div className="card-body">
+          <Row>
+            <Col sm="8">
+            <h4 className="card-text" style={{marginTop:"10px"}}>State - {props.match.params.state_name}</h4>
+            <h4 className="card-text">Active Cases - {props.match.params.total_cases}</h4>
+            </Col>
+            <Col sm="4">
+            <Link to='/country'>
+            <button type="button" className="btn btn-primary" style={{marginLeft:"5%", marginTop:"8px"}}>Country Chart</button>
+            </Link>
+            <Link to='/'>
+            <button type="button" className="btn btn-primary" style={{marginLeft:"15%", marginTop:"10px"}}>Dashboard</button>
+            </Link>
+            </Col>
+          </Row>
+        </div>
+        </div>
       </Row>
       <Row>
         <BarChart
@@ -81,7 +88,7 @@ export default function State(props){
         height={750}
         data={district_cases}
         margin={{
-          top: 75, right: 0, left: 30, bottom: 5,
+          top: 40, right: 0, left: 30, bottom: 5,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
