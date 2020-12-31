@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Country from './country';
 import State from './state';
 import Home from './home';
-import { useDispatch, useSelector } from 'react-redux';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -39,8 +38,6 @@ const App = () => {
 
     //create a store
     const store = createStore(rootReducer);
-    // const dispatch = useDispatch();
-    // console.log(dispatch());
 
     return <div>
         <Provider store={store}>

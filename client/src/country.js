@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   } from 'recharts';
-  import { useDispatch, useSelector } from 'react-redux';
+  import { useSelector } from 'react-redux';
   import { Row, Col } from 'reactstrap';
   import { Link } from 'react-router-dom';
 
 
 export default function Country(){
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [state_cases, setCases] = useState([{}])
 
     //get state from store
@@ -73,7 +73,8 @@ export default function Country(){
             </div>;
         }
 
-    return <div className="country">
+    return (
+        <div className="country">
         <Row>
         <div className="card rounded" style={{marginLeft:"35%", marginTop:"3%", width:"510px", boxShadow:"black"}}>
         <div className="card-body">
@@ -84,18 +85,18 @@ export default function Country(){
             </Col>
             <Col sm="4">
             <Link to='/'>
-            <button type="button" className="btn btn-primary" style={{marginLeft:"20%", marginTop:"13px"}}>Dashboard</button>
+            <button type="button" className="btn btn-primary" style={{marginLeft:"20%", marginTop:"13px"}}>Home</button>
             </Link>
             </Col>
           </Row>
         </div>
         </div>
+        <p style={{marginLeft:"39%"}}>* Click on a state bar to view state chart</p>
       </Row>
-      <p style={{marginLeft:"39%"}}>* Click on a state bar to view state chart</p>
-        {loading === true ? <h2>Getting Data...</h2> :
+      <Row>
         <BarChart
         width={1900}
-        height={700}
+        height={750}
         data = {state_cases}
         margin={{
           top: 30, right: 0, left: 30, bottom: 30,
@@ -104,9 +105,11 @@ export default function Country(){
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="state_code"/>
         <YAxis/>
-    <Tooltip content={<CustomTooltip />}/>
-        <Legend />
+        <Tooltip content={<CustomTooltip />}/>
+        <Legend style={{marginTop : "100px"}}/>
         <Bar dataKey="active_cases" fill="#8884d8" onClick={(e) =>handleClick(e)} />
-      </BarChart>}
+      </BarChart>
+      </Row>
     </div>
+    )
 }

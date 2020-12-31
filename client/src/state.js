@@ -4,7 +4,7 @@ import {
   } from 'recharts';
 import {Link} from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 export default function State(props){
@@ -40,26 +40,6 @@ export default function State(props){
     getDistrictCounts();
     },[data, props.match.params.state_name])
 
-
-  // function CustomTooltip({label}) {
-  //   var district_name ='';
-  //   data.forEach ((district) => {
-  //   if(state.statecode === label){
-  //       state_name = state.detectedstate
-  //   }
-  //   });
-  //   var state_case;
-  //   state_cases.forEach( (state) => {
-  //       if (state.state === state_name){
-  //           state_case = parseInt(state.active_cases)
-  //       }
-  //   })
-  //   return <div>
-  //       <h4><b>{`State : ${state_name}`}</b></h4>
-  //       <h4>{`Cases : ${state_case}`}</h4>
-  //       </div>;
-  //   }
-
     return (
     <div className="state">
       <Row>
@@ -67,7 +47,7 @@ export default function State(props){
         <div className="card-body">
           <Row>
             <Col sm="8">
-            <h4 className="card-text" style={{marginTop:"10px"}}>State - {props.match.params.state_name}</h4>
+            <h4 className="card-text" style={{marginTop:"20px"}}>State - {props.match.params.state_name}</h4>
             <h4 className="card-text">Active Cases - {props.match.params.total_cases}</h4>
             </Col>
             <Col sm="4">
@@ -75,7 +55,7 @@ export default function State(props){
             <button type="button" className="btn btn-primary" style={{marginLeft:"5%", marginTop:"8px"}}>Country Chart</button>
             </Link>
             <Link to='/'>
-            <button type="button" className="btn btn-primary" style={{marginLeft:"15%", marginTop:"10px"}}>Dashboard</button>
+            <button type="button" className="btn btn-primary" style={{marginLeft:"22%", marginTop:"10px"}}>Home</button>
             </Link>
             </Col>
           </Row>

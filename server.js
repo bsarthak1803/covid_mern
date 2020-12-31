@@ -22,15 +22,9 @@ app.get('/', async (req,res) => {
     res.send(json);
     }
     catch(err){
-        console.error(err.msg);
+        res.status(500).json({ msg : "API is down currently"});
     }
 });
-
-// //setup the end points/routes
-// app.use('/api/users', require('./routes/api/users'));
-// app.use('/api/auth', require('./routes/api/auth'));
-// app.use('/api/profile', require('./routes/api/profile'));
-// app.use('/api/posts', require('./routes/api/posts'));
 
 
 const PORT = process.env.PORT || 5000;
